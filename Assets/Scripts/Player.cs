@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
         if (Mathf.Abs(horizontal) >= 1)
         {
-            rigidBody2D.velocity = new Vector2(horizontal, rigidBody2D.velocity.y);
+            _rigidbody2D.velocity = new Vector2(horizontal, _rigidbody2D.velocity.y);
         }
 
         var animator = GetComponent<Animator>();
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            rigidBody2D.AddForce(Vector2.up * jumpForce);
+            _rigidbody2D.AddForce(Vector2.up * jumpForce);
         }
     }
 
