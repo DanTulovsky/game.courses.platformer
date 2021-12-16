@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Fly : MonoBehaviour
 {
-    private Vector3 _startPosition;
+    private Vector2 _startPosition;
+    private Vector2 _direction = Vector2.up;
 
-    void Start()
+    private void Start()
     {
         _startPosition = transform.position;
     }
 
-    void Update()
+    private void Update()
     {
-        transform.Translate(Vector2.up * Time.deltaTime);
+        transform.Translate(_direction * Time.deltaTime);
+        var distance = Vector2.Distance(_startPosition, transform.position);
+
+        if (distance >= 2)
+        {
+            _direction *= -1;
+        }
     }
 }
