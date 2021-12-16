@@ -58,10 +58,11 @@ public class Player : MonoBehaviour
         {
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpVelocity);
             _fallTimer = 0;
-            _jumpTimer += Time.deltaTime;
         }
 
-        if (isGrounded)
+        _jumpTimer += Time.deltaTime;
+
+        if (isGrounded && _fallTimer > 0)
         {
             _fallTimer = 0;
             _jumpsRemaining = maxJumps;
