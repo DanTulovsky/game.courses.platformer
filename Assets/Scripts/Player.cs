@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed = 1;
     [SerializeField] private float jumpForce = 200;
     [SerializeField] private int maxJumps = 2;
+    [SerializeField] private Transform _feet;
 
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
@@ -48,7 +50,11 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        _jumpsRemaining = maxJumps;
+        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default"));
+        if (hit != null)
+        {
+            _jumpsRemaining = maxJumps;
+        }
     }
 
     public void ResetToStart()
