@@ -3,10 +3,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 1;
-    [SerializeField] private float jumpForce = 200;
+    [SerializeField] private float jumpVelocity = 10;
     [SerializeField] private int maxJumps = 2;
     [SerializeField] private Transform feet;
+    [SerializeField] private float downPull = 0.1f;
 
+    private float _fallTimer;
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
     private int _jumpsRemaining;
@@ -19,8 +21,11 @@ public class Player : MonoBehaviour
         _jumpsRemaining = maxJumps;
     }
 
-    void Update()
+    private void Update()
     {
+        var hit = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Default"));
+        bool isGrounded = hit != null;
+
         var horizontal = Input.GetAxis("Horizontal") * speed;
 
         if (Mathf.Abs(horizontal) >= 1)
@@ -40,17 +45,21 @@ public class Player : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
         {
-            _rigidbody2D.AddForce(Vector2.up * jumpForce);
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpVelocity);
             _jumpsRemaining--;
+            _fallTimer = 0;
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        var hit = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Default"));
-        if (hit != null)
+        if (isGrounded)
         {
+            _fallTimer = 0;
             _jumpsRemaining = maxJumps;
+        }
+        else
+        {
+            _fallTimer += Time.deltaTime;
+            var downForce = downPull * _fallTimer * _fallTimer;
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y - downForce);
         }
     }
 
