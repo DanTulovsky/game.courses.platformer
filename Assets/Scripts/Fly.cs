@@ -1,11 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Fly : MonoBehaviour
 {
     private Vector2 _startPosition;
-    private Vector2 _direction = Vector2.up;
+    [SerializeField] private Vector2 direction = Vector2.up;
+    [SerializeField] private float maxDistance = 2;
+    [SerializeField] private float speed = 1;
+
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        var player = col.GetComponent<Player>();
+        if (player == null) return;
+
+        player.ResetToStart();
+    }
 
     private void Start()
     {
@@ -14,12 +24,13 @@ public class Fly : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(_direction * Time.deltaTime);
+        transform.Translate(direction.normalized * (speed * Time.deltaTime));
         var distance = Vector2.Distance(_startPosition, transform.position);
 
-        if (distance >= 2)
+        if (distance >= maxDistance)
         {
-            _direction *= -1;
+            transform.position = _startPosition + (direction.normalized * maxDistance);
+            direction *= -1;
         }
     }
 }
