@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,11 +5,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed = 1;
     [SerializeField] private float jumpForce = 200;
     [SerializeField] private int maxJumps = 2;
-    [SerializeField] private Transform _feet;
+    [SerializeField] private Transform feet;
 
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
     private int _jumpsRemaining;
+    private static readonly int Walk = Animator.StringToHash("Walk");
 
     private void Start()
     {
@@ -33,7 +30,7 @@ public class Player : MonoBehaviour
 
         var animator = GetComponent<Animator>();
         bool walking = horizontal != 0;
-        animator.SetBool("Walk", walking);
+        animator.SetBool(Walk, walking);
 
         if (horizontal != 0)
         {
@@ -50,7 +47,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default"));
+        var hit = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Default"));
         if (hit != null)
         {
             _jumpsRemaining = maxJumps;
