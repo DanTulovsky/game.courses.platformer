@@ -18,7 +18,7 @@ public class Fly : MonoBehaviour
     private void Update()
     {
         transform.Translate(direction.normalized * (speed * Time.deltaTime));
-        var distance = Vector2.Distance(_startPosition, transform.position);
+        float distance = Vector2.Distance(_startPosition, transform.position);
 
         if (distance >= maxDistance)
         {
