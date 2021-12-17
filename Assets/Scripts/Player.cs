@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
     private float _fallTimer;
     private float _jumpTimer;
@@ -29,8 +31,6 @@ public class Player : MonoBehaviour
     private float _horizontal;
 
     private static readonly int Walk = Animator.StringToHash("Walk");
-    private SpriteRenderer _spriteRenderer;
-    private Animator _animator;
     private bool _isGrounded;
 
     private void Start()
