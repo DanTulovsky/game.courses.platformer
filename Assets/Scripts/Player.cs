@@ -2,23 +2,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 1;
-
-    [SerializeField]
-    private float jumpVelocity = 10;
-
-    [SerializeField]
-    private int maxJumps = 2;
-
-    [SerializeField]
-    private Transform feet;
-
-    [SerializeField]
-    private float downPull = 0.1f;
-
-    [SerializeField]
-    private float maxJumpDuration = 0.1f;
+    [Header("Movement")]
+    [SerializeField] private float speed = 1;
+    [SerializeField] private float slipFactor = 1;
+    
+    [Header("Jumping")]
+    [SerializeField] private float jumpVelocity = 10;
+    [SerializeField] private int maxJumps = 2;
+    [SerializeField] private float downPull = 0.1f;
+    [SerializeField] private float maxJumpDuration = 0.1f;
+    
+    [Header("Misc")]
+    [SerializeField] private Transform feet;
 
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
@@ -32,6 +27,7 @@ public class Player : MonoBehaviour
 
     private static readonly int Walk = Animator.StringToHash("Walk");
     private bool _isGrounded;
+    private bool _isOnSlipperySurface;
 
     private void Start()
     {
@@ -47,7 +43,12 @@ public class Player : MonoBehaviour
         UpdateIsGrounded();
 
         ReadHorizontalInput();
-        MoveHorizontal();
+        
+        if (_isOnSlipperySurface)
+            SlipHorizontal();
+        else
+            MoveHorizontal();
+        
         UpdateAnimator();
         UpdateSpriteDirection();
 
@@ -95,10 +96,14 @@ public class Player : MonoBehaviour
 
     private void MoveHorizontal()
     {
-        if (Mathf.Abs(_horizontal) >= 1)
-        {
-            _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
-        }
+        _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
+    }
+
+    private void SlipHorizontal()
+    {
+        var desiredVelocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
+        var smoothedVelocity = Vector2.Lerp(_rigidbody2D.velocity, desiredVelocity, Time.deltaTime / slipFactor);
+        _rigidbody2D.velocity = smoothedVelocity;
     }
 
     private void ReadHorizontalInput()
@@ -125,6 +130,8 @@ public class Player : MonoBehaviour
     {
         Collider2D hit = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Default"));
         _isGrounded = hit != null;
+
+        _isOnSlipperySurface = hit?.CompareTag("Slippery") ?? false;
     }
 
     public void ResetToStart()
