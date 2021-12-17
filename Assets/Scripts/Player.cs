@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     private static readonly int Walk = Animator.StringToHash("Walk");
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
+    private bool _isGrounded;
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        bool isGrounded = IsGrounded();
+        UpdateIsGrounded();
 
         ReadHorizontalInput();
         MoveHorizontal();
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour
 
         _jumpTimer += Time.deltaTime;
 
-        if (isGrounded && _fallTimer > 0)
+        if (_isGrounded && _fallTimer > 0)
         {
             _fallTimer = 0;
             _jumpsRemaining = maxJumps;
@@ -120,11 +121,10 @@ public class Player : MonoBehaviour
         _animator.SetBool(Walk, walking);
     }
 
-    private bool IsGrounded()
+    private void UpdateIsGrounded()
     {
         Collider2D hit = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Default"));
-        bool isGrounded = hit != null;
-        return isGrounded;
+        _isGrounded = hit != null;
     }
 
     public void ResetToStart()
