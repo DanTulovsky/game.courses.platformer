@@ -6,6 +6,6 @@ public class HorizontalCamera : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
+        // transform.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
     }
 }
