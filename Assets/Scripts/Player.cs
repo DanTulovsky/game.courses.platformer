@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private int playerNumber = 1;
+    
     [Header("Movement")]
     [SerializeField] private float speed = 1;
     [SerializeField] private float slipFactor = 1;
@@ -76,10 +78,6 @@ public class Player : MonoBehaviour
         _fallTimer = 0;
     }
 
-    private bool ShouldContinueJump()
-    {
-        return Input.GetButton("Fire1") && _jumpTimer <= maxJumpDuration;
-    }
 
     private void Jump()
     {
@@ -89,16 +87,22 @@ public class Player : MonoBehaviour
         _jumpTimer = 0;
     }
 
-    private bool ShouldStartJump()
-    {
-        return Input.GetButtonDown("Fire1") && _jumpsRemaining > 0;
-    }
     
     private void ReadHorizontalInput()
     {
-        _horizontal = Input.GetAxis("Horizontal") * speed;
+        _horizontal = Input.GetAxis($"P{playerNumber}Horizontal") * speed;
     }
 
+    private bool ShouldContinueJump()
+    {
+        return Input.GetButton($"P{playerNumber}Jump") && _jumpTimer <= maxJumpDuration;
+    }
+    
+    private bool ShouldStartJump()
+    {
+        return Input.GetButtonDown($"P{playerNumber}Jump") && _jumpsRemaining > 0;
+    }
+    
     private void MoveHorizontal()
     {
         _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
