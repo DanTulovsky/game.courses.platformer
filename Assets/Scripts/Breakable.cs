@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class Breakable : MonoBehaviour
 {
+    private ParticleSystem _particleSystem;
+
+    private void Awake()
+    {
+        _particleSystem = GetComponent<ParticleSystem>();
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.GetComponent<Player>() == null) return;
@@ -19,6 +26,9 @@ public class Breakable : MonoBehaviour
 
     private void TakeHit()
     {
-        gameObject.SetActive(false);
+        _particleSystem.Play();
+        
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 }
