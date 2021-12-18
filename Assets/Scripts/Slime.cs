@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +6,7 @@ public class Slime : MonoBehaviour
 {
     [SerializeField] private Transform leftSensor;
     [SerializeField] private Transform rightSensor;
+    [SerializeField] private Sprite deadSprite;
 
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
@@ -51,9 +53,10 @@ public class Slime : MonoBehaviour
         if (player == null) return;
 
         Vector2 normal = col.GetContact(0).normal;
+        // Coming from above
         if (normal.y <= -0.5)
         {
-            Die();
+            StartCoroutine(Die());
         }
         else
         {
@@ -61,8 +64,24 @@ public class Slime : MonoBehaviour
         }
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
-        Destroy(gameObject);
+        GetComponent<Animator>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+
+        _rigidbody2D.simulated = false;
+        _spriteRenderer.sprite = deadSprite;
+
+        enabled = false;
+
+        float alpha = 1;
+
+        while (alpha > 0)
+        {
+            yield return new WaitForFixedUpdate();
+            
+            alpha -= Time.deltaTime;
+            _spriteRenderer.color = new Color(1, 1, 1, alpha);
+        }
     }
 }
