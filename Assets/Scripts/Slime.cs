@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Slime : MonoBehaviour
 {
@@ -28,13 +26,15 @@ public class Slime : MonoBehaviour
 
     private void ScanSensor(Transform sensor)
     {
-        Debug.DrawRay(sensor.position, Vector2.down * 0.1f, Color.red);
-        RaycastHit2D downResult = Physics2D.Raycast(sensor.position, Vector2.down, 0.1f);
+        Vector3 position = sensor.position;
+
+        Debug.DrawRay(position, Vector2.down * 0.1f, Color.red);
+        RaycastHit2D downResult = Physics2D.Raycast(position, Vector2.down, 0.1f);
         if (downResult.collider == null)
             TurnAround();
 
         Debug.DrawRay(sensor.position, new Vector2(_direction, 0) * 0.1f, Color.red);
-        var sideResult = Physics2D.Raycast(sensor.position, new Vector2(_direction, 0), 0.1f);
+        var sideResult = Physics2D.Raycast(position, new Vector2(_direction, 0), 0.1f);
         if (sideResult.collider != null)
             TurnAround();
     }
@@ -50,6 +50,19 @@ public class Slime : MonoBehaviour
         Player player = col.collider.GetComponent<Player>();
         if (player == null) return;
 
-        player.ResetToStart();
+        Vector2 normal = col.GetContact(0).normal;
+        if (normal.y <= -0.5)
+        {
+            Die();
+        }
+        else
+        {
+            player.ResetToStart();
+        }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }
