@@ -1,12 +1,16 @@
 using UnityEngine;
 
-public class KillOnEnter : MonoBehaviour
+public class Coin : MonoBehaviour
 {
+    private static int _coinsCollected;
+
     private void OnTriggerEnter2D(Collider2D col)
     {
+        
         Player player = col.GetComponent<Player>();
         if (player == null) return;
-
-        player.ResetToStart();
+        
+        gameObject.SetActive(false);
+        _coinsCollected++;
     }
 }
