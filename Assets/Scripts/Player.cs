@@ -93,6 +93,11 @@ public class Player : MonoBehaviour
     {
         return Input.GetButtonDown("Fire1") && _jumpsRemaining > 0;
     }
+    
+    private void ReadHorizontalInput()
+    {
+        _horizontal = Input.GetAxis("Horizontal") * speed;
+    }
 
     private void MoveHorizontal()
     {
@@ -104,11 +109,6 @@ public class Player : MonoBehaviour
         var desiredVelocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
         var smoothedVelocity = Vector2.Lerp(_rigidbody2D.velocity, desiredVelocity, Time.deltaTime / slipFactor);
         _rigidbody2D.velocity = smoothedVelocity;
-    }
-
-    private void ReadHorizontalInput()
-    {
-        _horizontal = Input.GetAxis("Horizontal") * speed;
     }
 
     private void UpdateSpriteDirection()
