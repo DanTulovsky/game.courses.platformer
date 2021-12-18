@@ -27,7 +27,8 @@ public class Player : MonoBehaviour
     private int _jumpsRemaining;
     private float _horizontal;
 
-    private static readonly int Walk = Animator.StringToHash("Walk");
+    private static readonly int WalkParam = Animator.StringToHash("Walk");
+    private static readonly int JumpParam = Animator.StringToHash("Jump");
     private bool _isGrounded;
     private bool _isOnSlipperySurface;
 
@@ -129,7 +130,9 @@ public class Player : MonoBehaviour
     private void UpdateAnimator()
     {
         bool walking = _horizontal != 0;
-        _animator.SetBool(Walk, walking);
+        _animator.SetBool(WalkParam, walking);
+        _animator.SetBool(JumpParam, ShouldContinueJump());
+
     }
 
     private void UpdateIsGrounded()
