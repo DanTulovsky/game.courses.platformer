@@ -91,6 +91,7 @@ public class Player : MonoBehaviour
     private void ReadHorizontalInput()
     {
         _horizontal = Input.GetAxis($"P{playerNumber}Horizontal") * speed;
+        Debug.Log(_horizontal);
     }
 
     private bool ShouldContinueJump()
