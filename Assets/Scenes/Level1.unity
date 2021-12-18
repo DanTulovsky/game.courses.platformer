@@ -2505,7 +2505,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.2280701, y: 1}
+    m_SensorSize: {x: 1.7784522, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3078,6 +3078,7 @@ MonoBehaviour:
   onReleased:
     m_PersistentCalls:
       m_Calls: []
+  playerNumber: 1
 --- !u!61 &1813657329
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3395,7 +3396,7 @@ Animator:
   m_GameObject: {fileID: 2053686581}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fad699d0e64404d98b355bfe2a78de04, type: 2}
+  m_Controller: {fileID: 22100000, guid: 5ea8ae42e46cc46df8776dbc9ebc8135, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3487,7 +3488,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: dc173c7a35e8146c6aa5df973c0a963d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d150caeaf67284ce6917d681f86d514f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
