@@ -15,4 +15,5 @@ public class Collectible : MonoBehaviour
         
         OnPickedUp?.Invoke();
     }
+
 }

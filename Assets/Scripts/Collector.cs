@@ -28,7 +28,7 @@ public class Collector : MonoBehaviour
         {
             c.OnPickedUp += ItemPickedUp;
         }
-        
+
         _remainingText?.SetText(_collectibles.Count.ToString());
     }
 
@@ -49,6 +49,18 @@ public class Collector : MonoBehaviour
         foreach (Collectible c in _collectibles)
         {
             c.OnPickedUp -= ItemPickedUp;
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        _collectibles ??= new HashSet<Collectible>(GetComponentsInChildren<Collectible>());
+
+        Gizmos.color = Color.yellow;
+        
+        foreach (Collectible c in _collectibles)
+        {
+            Gizmos.DrawLine(transform.position, c.transform.position);
         }
     }
 }
