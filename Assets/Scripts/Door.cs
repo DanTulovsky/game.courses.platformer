@@ -16,13 +16,17 @@ public class Door : MonoBehaviour
     }
 
     [ContextMenu("Open Door")]
-    private void Open()
+    public void Open()
     {
         _animator.SetTrigger(OpenProp);
         _open = true;
         if (canvas)
             canvas.enabled = false;
-        
+
+        if (exit)
+        {
+            exit.Open();
+        }
     }
 
     private void Update()

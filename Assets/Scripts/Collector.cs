@@ -1,11 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Collector : MonoBehaviour
 {
+    [SerializeField] private UnityEvent onCollectionComplete;
+    
+    private static readonly int OpenProp = Animator.StringToHash("Open");
+    
     private HashSet<Collectible> _collectibles;
     private TMP_Text _remainingText;
 
@@ -36,5 +39,7 @@ public class Collector : MonoBehaviour
         _remainingText?.SetText(countRemaining.ToString());
         
         if (countRemaining > 0 ) return;
+        
+       onCollectionComplete?.Invoke(); 
     }
 }
