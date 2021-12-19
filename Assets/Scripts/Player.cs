@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -31,11 +32,19 @@ public class Player : MonoBehaviour
     private static readonly int JumpParam = Animator.StringToHash("Jump");
     private bool _isGrounded;
     private bool _isOnSlipperySurface;
+    private string _jumpButton;
+    private string _horizontalAxis;
+    private LayerMask _defaultMask;
 
     public int PlayerNumber => playerNumber;
 
+
     private void Start()
     {
+        _jumpButton = $"P{playerNumber}Jump";
+        _horizontalAxis = $"P{playerNumber}Horizontal";
+        _defaultMask = LayerMask.GetMask("Default");
+        
         _startPosition = transform.position;
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -93,17 +102,17 @@ public class Player : MonoBehaviour
     
     private void ReadHorizontalInput()
     {
-        _horizontal = Input.GetAxis($"P{playerNumber}Horizontal") * speed;
+        _horizontal = Input.GetAxis(_horizontalAxis) * speed;
     }
 
     private bool ShouldContinueJump()
     {
-        return Input.GetButton($"P{playerNumber}Jump") && _jumpTimer <= maxJumpDuration;
+        return Input.GetButton(_jumpButton) && _jumpTimer <= maxJumpDuration;
     }
     
     private bool ShouldStartJump()
     {
-        return Input.GetButtonDown($"P{playerNumber}Jump") && _jumpsRemaining > 0;
+        return Input.GetButtonDown(_jumpButton) && _jumpsRemaining > 0;
     }
     
     private void MoveHorizontal()
@@ -137,7 +146,7 @@ public class Player : MonoBehaviour
 
     private void UpdateIsGrounded()
     {
-        Collider2D hit = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Default"));
+        Collider2D hit = Physics2D.OverlapCircle(feet.position, 0.1f, _defaultMask);
         _isGrounded = hit != null;
 
         _isOnSlipperySurface = hit?.CompareTag("Slippery") ?? false;
