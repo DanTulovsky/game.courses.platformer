@@ -6,6 +6,7 @@ public class Flag : MonoBehaviour
 {
     [SerializeField] private string sceneName;
     private Animator _animator;
+    private static readonly int Raise = Animator.StringToHash("Raise");
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class Flag : MonoBehaviour
         Player player = col.GetComponent<Player>();
         if (player == null) return;
 
-        _animator.SetTrigger("Raise");
+        _animator.SetTrigger(Raise);
 
         StartCoroutine(LoadAfterDelay());
     }
