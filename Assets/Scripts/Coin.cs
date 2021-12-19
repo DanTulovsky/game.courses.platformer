@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public static int CoinsCollected { get; private set; }
+    public static int CoinsCollected { get; set; }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
