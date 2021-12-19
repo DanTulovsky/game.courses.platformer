@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -25,13 +26,13 @@ public class Collector : MonoBehaviour
 
         foreach (Collectible c in _collectibles)
         {
-            c.AddCollector(this);
+            c.OnPickedUp += ItemPickedUp;
         }
         
         _remainingText?.SetText(_collectibles.Count.ToString());
     }
 
-    public void ItemPickedUp()
+    private void ItemPickedUp()
     {
         _countCollected++;
         int countRemaining = _collectibles.Count - _countCollected;
@@ -41,5 +42,13 @@ public class Collector : MonoBehaviour
         if (countRemaining > 0) return;
 
         onCollectionComplete?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Collectible c in _collectibles)
+        {
+            c.OnPickedUp -= ItemPickedUp;
+        }
     }
 }
