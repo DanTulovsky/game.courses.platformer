@@ -4,7 +4,7 @@ public class Door : MonoBehaviour
 {
     [SerializeField] private int requiredCoins = 3;
     [SerializeField] private Door exit;
-    [SerializeField] private Canvas _canvas;
+    [SerializeField] private Canvas canvas;
 
     private Animator _animator;
     private static readonly int OpenProp = Animator.StringToHash("Open");
@@ -20,8 +20,8 @@ public class Door : MonoBehaviour
     {
         _animator.SetTrigger(OpenProp);
         _open = true;
-        if (_canvas)
-            _canvas.enabled = false;
+        if (canvas)
+            canvas.enabled = false;
         
     }
 
