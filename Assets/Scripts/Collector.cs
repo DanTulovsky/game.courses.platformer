@@ -25,13 +25,13 @@ public class Collector : MonoBehaviour
 
         foreach (Collectible c in _collectibles)
         {
-            c.SetCollector(this);
+            c.AddCollector(this);
         }
         
         _remainingText?.SetText(_collectibles.Count.ToString());
     }
 
-    public void ItemPickedUp(Collectible collectible)
+    public void ItemPickedUp()
     {
         _countCollected++;
         int countRemaining = _collectibles.Count - _countCollected;
