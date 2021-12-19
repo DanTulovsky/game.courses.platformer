@@ -6,11 +6,12 @@ using UnityEngine.Events;
 public class Collector : MonoBehaviour
 {
     [SerializeField] private UnityEvent onCollectionComplete;
-    
+
     private static readonly int OpenProp = Animator.StringToHash("Open");
-    
+
     private HashSet<Collectible> _collectibles;
     private TMP_Text _remainingText;
+    private int _countCollected;
 
     private void Awake()
     {
@@ -21,25 +22,24 @@ public class Collector : MonoBehaviour
     private void Start()
     {
         _remainingText = GetComponentInChildren<TMP_Text>();
+
+        foreach (Collectible c in _collectibles)
+        {
+            c.SetCollector(this);
+        }
+        
+        _remainingText?.SetText(_collectibles.Count.ToString());
     }
 
-    // Update is called once per frame
-    private void Update()
+    public void ItemPickedUp(Collectible collectible)
     {
-        int countRemaining = 0;
-        
-        foreach (Collectible t in _collectibles)
-        {
-            if (t.gameObject.activeSelf)
-            {
-                countRemaining++;
-            }
-        }
+        _countCollected++;
+        int countRemaining = _collectibles.Count - _countCollected;
 
         _remainingText?.SetText(countRemaining.ToString());
-        
-        if (countRemaining > 0 ) return;
-        
-       onCollectionComplete?.Invoke(); 
+
+        if (countRemaining > 0) return;
+
+        onCollectionComplete?.Invoke();
     }
 }
