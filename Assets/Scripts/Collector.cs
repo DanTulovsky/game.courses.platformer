@@ -52,6 +52,18 @@ public class Collector : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        _collectibles ??= new HashSet<Collectible>(GetComponentsInChildren<Collectible>());
+
+        Gizmos.color = Color.gray;
+        
+        foreach (Collectible c in _collectibles)
+        {
+            Gizmos.DrawLine(transform.position, c.transform.position);
+        }
+    }
+    
     private void OnDrawGizmosSelected()
     {
         _collectibles ??= new HashSet<Collectible>(GetComponentsInChildren<Collectible>());
