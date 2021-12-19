@@ -113,8 +113,8 @@ public class Player : MonoBehaviour
 
     private void SlipHorizontal()
     {
-        var desiredVelocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
-        var smoothedVelocity = Vector2.Lerp(_rigidbody2D.velocity, desiredVelocity, Time.deltaTime / slipFactor);
+        Vector2 desiredVelocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
+        Vector2 smoothedVelocity = Vector2.Lerp(_rigidbody2D.velocity, desiredVelocity, Time.deltaTime / slipFactor);
         _rigidbody2D.velocity = smoothedVelocity;
     }
 

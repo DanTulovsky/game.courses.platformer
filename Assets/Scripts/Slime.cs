@@ -35,7 +35,7 @@ public class Slime : MonoBehaviour
             TurnAround();
 
         Debug.DrawRay(sensor.position, new Vector2(_direction, 0) * 0.1f, Color.red);
-        var sideResult = Physics2D.Raycast(position, new Vector2(_direction, 0), 0.1f);
+        RaycastHit2D sideResult = Physics2D.Raycast(position, new Vector2(_direction, 0), 0.1f);
         if (sideResult.collider != null)
             TurnAround();
     }
