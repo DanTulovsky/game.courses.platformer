@@ -1,35 +1,26 @@
-using System;
 using UnityEngine;
 
-public class CoinBox : MonoBehaviour
+public class CoinBox : HittableFromBelow
 {
     [SerializeField] private int totalCoins = 3;
-    [SerializeField] private Sprite usedSprite;
 
-    private SpriteRenderer _spriteRenderer;
-    
+    protected override bool CanUse => _remainingCoins > 0;
+
     private int _remainingCoins;
 
-    private void Start()
+    protected override void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        base.Start();
         _remainingCoins = totalCoins;
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    protected override void Use()
     {
-        Player player = col.collider.GetComponent<Player>();
-        if (player == null) return;
+        base.Use();
 
-
-        // Hit from below
-        if (col.GetContact(0).normal.y > 0 && _remainingCoins > 0)
-        {
-            _remainingCoins--;
-            Coin.CoinsCollected++;
-
-            if (_remainingCoins <= 0)
-                _spriteRenderer.sprite = usedSprite;
-        }
+        if (_remainingCoins <= 0) return;
+        
+        _remainingCoins--;
+        Coin.CoinsCollected++;
     }
 }

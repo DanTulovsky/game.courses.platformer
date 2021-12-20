@@ -1,49 +1,36 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemBox : MonoBehaviour
+public class ItemBox : HittableFromBelow
 {
-    [SerializeField] private Sprite usedSprite;
     [SerializeField] private GameObject item;
     [SerializeField] private Vector2 itemLaunchVelocity = Vector2.up;
 
-    private SpriteRenderer _spriteRenderer;
-    private bool used;
+    private bool _used;
+    protected override bool CanUse => _used == false && item != null;
 
-    private void Awake()
+    protected override void Use()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (!item) return;
+        
+        base.Use();
+        
+        if (_used) return;
+        
+        _used = true;
+        
+        item.SetActive(true);
+            
+        if (item.TryGetComponent(out Rigidbody2D rb))
+        {
+            rb.velocity = itemLaunchVelocity;
+        }
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+        
         if (item)
             item.SetActive(false);
-    }
-
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (used) return;
-        
-        Player player = col.collider.GetComponent<Player>();
-        if (player == null) return;
-
-
-        // Hit from below
-        if (col.GetContact(0).normal.y > 0)
-        {
-            _spriteRenderer.sprite = usedSprite;
-            if (!item) return;
-
-            used = true;
-            item.SetActive(true);
-            
-            if (item.TryGetComponent(out Rigidbody2D rigidbody2D))
-            {
-                rigidbody2D.velocity = itemLaunchVelocity;
-            }
-        }
     }
 }
