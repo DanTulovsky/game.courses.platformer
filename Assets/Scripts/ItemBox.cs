@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class ItemBox : HittableFromBelow
 {
-    [SerializeField] private GameObject item;
     [SerializeField] private Vector2 itemLaunchVelocity = Vector2.up;
     [SerializeField] private GameObject itemPrefab;
     
+     private GameObject item;
     private bool _used;
     protected override bool CanUse => _used == false;
 
