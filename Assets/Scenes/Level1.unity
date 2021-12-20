@@ -26618,10 +26618,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3325609475255711006, guid: 615ae22ed192a4942b2c41970de495cd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.4166666
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325609475255711006, guid: 615ae22ed192a4942b2c41970de495cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1666666
+      objectReference: {fileID: 0}
     - target: {fileID: 3325609475255711007, guid: 615ae22ed192a4942b2c41970de495cd, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 49500949}
+    - target: {fileID: 3325609476242699677, guid: 615ae22ed192a4942b2c41970de495cd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.4166666
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325609476242699677, guid: 615ae22ed192a4942b2c41970de495cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325609476364760807, guid: 615ae22ed192a4942b2c41970de495cd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.4166666
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325609476364760807, guid: 615ae22ed192a4942b2c41970de495cd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.1666666
+      objectReference: {fileID: 0}
     - target: {fileID: 3325609476364760809, guid: 615ae22ed192a4942b2c41970de495cd, type: 3}
       propertyPath: m_Targets.Array.data[0].target
       value: 
@@ -27039,6 +27063,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 464896849}
     m_Modifications:
+    - target: {fileID: 4718539078395161598, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
+      propertyPath: m_Name
+      value: SpringBoard
+      objectReference: {fileID: 0}
     - target: {fileID: 4718539078873737798, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
       propertyPath: m_RootOrder
       value: 1
