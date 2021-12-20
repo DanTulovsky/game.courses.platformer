@@ -14,10 +14,7 @@ public class ItemBox : HittableFromBelow
         
         base.Use();
         
-        if (_used) return;
-        
         _used = true;
-        
         item.SetActive(true);
             
         if (item.TryGetComponent(out Rigidbody2D rb))
