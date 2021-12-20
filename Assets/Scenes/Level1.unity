@@ -27063,21 +27063,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 464896849}
     m_Modifications:
+    - target: {fileID: 3757282598679135756, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4718539078395161598, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
       propertyPath: m_Name
       value: SpringBoard
       objectReference: {fileID: 0}
+    - target: {fileID: 4718539078873737797, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4718539078873737797, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
+      propertyPath: itemPrefab
+      value: 
+      objectReference: {fileID: 4101546242524443372, guid: 9c9e426be09824bb4b6489bdf98dde33, type: 3}
     - target: {fileID: 4718539078873737798, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4718539078873737798, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 4718539078873737798, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.5
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4718539078873737798, guid: 2b6161d964d17440e9925c8b85a6ae38, type: 3}
       propertyPath: m_LocalPosition.z

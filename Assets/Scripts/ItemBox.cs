@@ -4,12 +4,15 @@ public class ItemBox : HittableFromBelow
 {
     [SerializeField] private GameObject item;
     [SerializeField] private Vector2 itemLaunchVelocity = Vector2.up;
-
+    [SerializeField] private GameObject itemPrefab;
+    
     private bool _used;
-    protected override bool CanUse => _used == false && item != null;
+    protected override bool CanUse => _used == false;
 
     protected override void Use()
     {
+        item = Instantiate(itemPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
+        
         if (!item) return;
         
         base.Use();
