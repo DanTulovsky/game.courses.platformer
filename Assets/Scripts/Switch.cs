@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,53 +6,91 @@ public class Switch : MonoBehaviour
 {
     [SerializeField] private Sprite toggleRight;
     [SerializeField] private Sprite toggleLeft;
+    [SerializeField] private Sprite toggleCenter;
+    
     [SerializeField] private UnityEvent onToggleRight;
+    [SerializeField] private UnityEvent onToggleCenter;
     [SerializeField] private UnityEvent onToggleLeft;
+
+    [SerializeField] private ToggleDirection startingDirection = ToggleDirection.Center;
 
     private SpriteRenderer _spriteRenderer;
 
-    private Sprite _toggleCenter;
+    private ToggleDirection _currentDirection = ToggleDirection.Center;
+
+    private enum ToggleDirection
+    {
+        Left,
+        Center,
+        Right
+    }
 
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _toggleCenter = _spriteRenderer.sprite;
+        SetToggleDirection(startingDirection, true);
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
         Player player = col.GetComponent<Player>();
         if (!player) return;
-        
+
         var playerRigidBody = player.GetComponent<Rigidbody2D>();
         if (!playerRigidBody) return;
-        
+
         bool wasOnRight = col.transform.position.x > transform.position.x;
         bool wasOnLeft = !wasOnRight;
-        
+
         bool playerWalkingRight = playerRigidBody.velocity.x > 0;
         bool playerWalkingLeft = playerRigidBody.velocity.x < 0;
 
         if (wasOnRight && playerWalkingRight)
-            ToggleRight();
+            SetToggleDirection(ToggleDirection.Right);
         else if (wasOnLeft && playerWalkingLeft)
-            ToggleLeft();
+            SetToggleDirection(ToggleDirection.Left);
     }
 
-    private void ToggleRight()
+    private void SetToggleDirection(ToggleDirection direction, bool force = false)
     {
-        _spriteRenderer.sprite = toggleRight;
-        onToggleRight.Invoke();
+        if (_currentDirection == direction && !force) return;
+        
+        _currentDirection = direction;
+        
+        switch (direction)
+        {
+            case ToggleDirection.Left:
+                _spriteRenderer.sprite = toggleLeft;
+                onToggleLeft.Invoke();
+                break;
+            case ToggleDirection.Center:
+                _spriteRenderer.sprite = toggleCenter;
+                onToggleCenter.Invoke();
+                break;
+            case ToggleDirection.Right:
+                _spriteRenderer.sprite = toggleRight;
+                onToggleRight.Invoke();
+                break;
+        }
     }
 
-    private void ToggleLeft()
+    private void OnValidate()
     {
-        _spriteRenderer.sprite = toggleLeft;
-        onToggleLeft.Invoke();
-    }
-
-    private void ToggleCenter()
-    {
-        _spriteRenderer.sprite = _toggleCenter;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        switch (startingDirection)
+        {
+            case ToggleDirection.Left:
+                _spriteRenderer.sprite = toggleLeft;
+                break;
+            case ToggleDirection.Center:
+                _spriteRenderer.sprite = toggleCenter;
+                break;
+            case ToggleDirection.Right:
+                _spriteRenderer.sprite = toggleRight;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }
