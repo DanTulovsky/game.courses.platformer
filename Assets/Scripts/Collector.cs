@@ -7,8 +7,6 @@ public class Collector : MonoBehaviour
 {
     [SerializeField] private UnityEvent onCollectionComplete;
 
-    private static readonly int OpenProp = Animator.StringToHash("Open");
-
     private HashSet<Collectible> _collectibles;
     private TMP_Text _remainingText;
     private int _countCollected;
@@ -28,7 +26,7 @@ public class Collector : MonoBehaviour
             c.OnPickedUp += ItemPickedUp;
         }
 
-        _remainingText?.SetText(_collectibles.Count.ToString());
+        _remainingText.SetText(_collectibles.Count.ToString());
     }
 
     private void ItemPickedUp()
@@ -36,7 +34,7 @@ public class Collector : MonoBehaviour
         _countCollected++;
         int countRemaining = _collectibles.Count - _countCollected;
 
-        _remainingText?.SetText(countRemaining.ToString());
+        _remainingText.SetText(countRemaining.ToString());
 
         if (countRemaining > 0) return;
 
