@@ -42,8 +42,9 @@ public class Switch : MonoBehaviour
         bool wasOnRight = col.transform.position.x > transform.position.x;
         bool wasOnLeft = !wasOnRight;
 
-        bool playerWalkingRight = playerRigidBody.velocity.x > 0;
-        bool playerWalkingLeft = playerRigidBody.velocity.x < 0;
+        Vector2 velocity = playerRigidBody.velocity;
+        bool playerWalkingRight = velocity.x > 0;
+        bool playerWalkingLeft = velocity.x < 0;
 
         if (wasOnRight && playerWalkingRight)
             SetToggleDirection(ToggleDirection.Right);
