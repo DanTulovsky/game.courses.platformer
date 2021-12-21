@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -153,6 +154,7 @@ public class Player : MonoBehaviour
 
     public void ResetToStart()
     {
+        SceneManager.LoadScene("MainMenu");
         _rigidbody2D.position = _startPosition;
         _rigidbody2D.velocity = Vector2.zero;
     }
