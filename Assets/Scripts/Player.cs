@@ -154,10 +154,10 @@ public class Player : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircle(feet.position, 0.1f, _defaultMask);
         _isGrounded = hit != null;
 
-        _isOnSlipperySurface = hit?.CompareTag("Slippery") ?? false;
+        _isOnSlipperySurface = hit != null && hit.CompareTag("Slippery");
     }
 
-    public void ResetToStart()
+    public void Die()
     {
         ScoreSystem.ResetScore();
         SceneManager.LoadScene("MainMenu");

@@ -16,6 +16,6 @@ public class KillOnEnter : MonoBehaviour
     {
         if (player == null) return;
 
-        player.ResetToStart();
+        player.Die();
     }
 }

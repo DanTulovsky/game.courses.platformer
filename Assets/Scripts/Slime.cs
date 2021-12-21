@@ -59,7 +59,7 @@ public class Slime : MonoBehaviour
         }
         else
         {
-            player.ResetToStart();
+            player.Die();
         }
     }
 
