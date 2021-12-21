@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
     public static int CoinsCollected { get; set; }
+
+    [SerializeField] private List<AudioClip> clips;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -24,6 +27,9 @@ public class Coin : MonoBehaviour
 
     private void PlaySound()
     {
-        GetComponent<AudioSource>().Play();
+        if (clips.Count == 0) return;
+
+        int randomIndex = UnityEngine.Random.Range(0, clips.Count-1);
+        GetComponent<AudioSource>().PlayOneShot(clips[randomIndex]);
     }
 }
