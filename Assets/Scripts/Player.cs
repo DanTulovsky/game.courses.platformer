@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour
     
     [Header("Misc")]
     [SerializeField] private Transform feet;
+
+    private AudioSource _jumpAudio;
 
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
@@ -38,6 +41,10 @@ public class Player : MonoBehaviour
 
     public int PlayerNumber => playerNumber;
 
+    private void Awake()
+    {
+        _jumpAudio = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -93,6 +100,8 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
+        if (_jumpAudio != null) _jumpAudio.Play();
+
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpVelocity);
         _jumpsRemaining--;
         _fallTimer = 0;
