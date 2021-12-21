@@ -1,0 +1,4 @@
+repository "game.courses.platformer@Wetsnow@cloud"
+  path "/"
+    br "/main"
+    co "/main"
