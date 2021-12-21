@@ -12,5 +12,7 @@ public class Coin : MonoBehaviour
         
         gameObject.SetActive(false);
         CoinsCollected++;
+
+        ScoreSystem.Add(1);
     }
 }
