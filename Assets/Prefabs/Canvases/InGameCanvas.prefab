@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 9028172791801498886}
   - component: {fileID: 9028172791801498905}
   m_Layer: 5
-  m_Name: CoinsCollectedCanvas
+  m_Name: InGameCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
