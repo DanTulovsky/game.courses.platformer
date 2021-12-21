@@ -4,7 +4,7 @@ public class UILockable : MonoBehaviour
 {
     private void OnEnable()
     {
-        var startButton = GetComponent<UIStartLevelButton>();
+        UIStartLevelButton startButton = GetComponent<UIStartLevelButton>();
 
         string key = startButton.LevelName + "Unlocked"; // e.g. "Level1Unlocked"
         int unlocked = PlayerPrefs.GetInt(key, 0);
