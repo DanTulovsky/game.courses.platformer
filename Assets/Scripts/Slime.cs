@@ -53,7 +53,7 @@ public class Slime : MonoBehaviour
 
         Vector2 normal = col.GetContact(0).normal;
         // Coming from above
-        if (normal.y <= -0.5)
+        if (normal.y <= -0.6)
         {
             StartCoroutine(Die());
         }

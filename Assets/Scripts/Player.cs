@@ -5,19 +5,16 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int playerNumber = 1;
-    
-    [Header("Movement")]
-    [SerializeField] private float speed = 1;
+
+    [Header("Movement")] [SerializeField] private float speed = 1;
     [SerializeField] private float slipFactor = 1;
-    
-    [Header("Jumping")]
-    [SerializeField] private float jumpVelocity = 10;
+
+    [Header("Jumping")] [SerializeField] private float jumpVelocity = 10;
     [SerializeField] private int maxJumps = 2;
     [SerializeField] private float downPull = 0.1f;
     [SerializeField] private float maxJumpDuration = 0.1f;
-    
-    [Header("Misc")]
-    [SerializeField] private Transform feet;
+
+    [Header("Misc")] [SerializeField] private Transform feet;
 
     private AudioSource _jumpAudio;
 
@@ -51,7 +48,7 @@ public class Player : MonoBehaviour
         _jumpButton = $"P{playerNumber}Jump";
         _horizontalAxis = $"P{playerNumber}Horizontal";
         _defaultMask = LayerMask.GetMask("Default");
-        
+
         _startPosition = transform.position;
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -64,12 +61,12 @@ public class Player : MonoBehaviour
         UpdateIsGrounded();
 
         ReadHorizontalInput();
-        
+
         if (_isOnSlipperySurface)
             SlipHorizontal();
         else
             MoveHorizontal();
-        
+
         UpdateAnimator();
         UpdateSpriteDirection();
 
@@ -108,7 +105,7 @@ public class Player : MonoBehaviour
         _jumpTimer = 0;
     }
 
-    
+
     private void ReadHorizontalInput()
     {
         _horizontal = Input.GetAxis(_horizontalAxis) * speed;
@@ -118,12 +115,12 @@ public class Player : MonoBehaviour
     {
         return Input.GetButton(_jumpButton) && _jumpTimer <= maxJumpDuration;
     }
-    
+
     private bool ShouldStartJump()
     {
         return Input.GetButtonDown(_jumpButton) && _jumpsRemaining > 0;
     }
-    
+
     private void MoveHorizontal()
     {
         _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
@@ -150,7 +147,6 @@ public class Player : MonoBehaviour
         bool walking = _horizontal != 0;
         _animator.SetBool(WalkParam, walking);
         _animator.SetBool(JumpParam, ShouldContinueJump());
-
     }
 
     private void UpdateIsGrounded()
@@ -163,9 +159,10 @@ public class Player : MonoBehaviour
 
     public void ResetToStart()
     {
+        ScoreSystem.ResetScore();
         SceneManager.LoadScene("MainMenu");
-        _rigidbody2D.position = _startPosition;
-        _rigidbody2D.velocity = Vector2.zero;
+        // _rigidbody2D.position = _startPosition;
+        // _rigidbody2D.velocity = Vector2.zero;
     }
 
     public void TeleportTo(Vector3 to)

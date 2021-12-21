@@ -13,10 +13,15 @@ public static class ScoreSystem
         HighScore
     }
 
+    public static void ResetScore()
+    {
+        Score = 0;
+    }
+
     public static void Add(int points)
     {
         Score += points;
-        if (OnScoreChanged != null) OnScoreChanged.Invoke(Score);
+        OnScoreChanged?.Invoke(Score);
 
         if (Score > HighScore)
         {
