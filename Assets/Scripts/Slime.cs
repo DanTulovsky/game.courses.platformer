@@ -70,7 +70,7 @@ public class Slime : MonoBehaviour
         GetComponent<Animator>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
 
-        _audioSource.Play();
+        if (_audioSource != null) _audioSource.Play();
 
         _rigidbody2D.simulated = false;
         _spriteRenderer.sprite = deadSprite;

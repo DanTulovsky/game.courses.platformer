@@ -207,8 +207,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  toggleLeftClip: {fileID: 8300000, guid: ee71aafaafa2346499b3aca251b97342, type: 3}
-  toggleRightClip: {fileID: 8300000, guid: 92197f361880f4387a4c83b2b548f564, type: 3}
   startingDirection: 1
 --- !u!61 &3405155665112136719
 BoxCollider2D:
@@ -245,7 +243,7 @@ AudioSource:
   m_GameObject: {fileID: 3405155665112136712}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5588109298527235132, guid: ef665d3419f3a40de93838236b8de584, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1

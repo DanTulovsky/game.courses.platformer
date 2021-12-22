@@ -102,10 +102,10 @@ MonoBehaviour:
   onUnlocked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3269046525705431513}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 3269046525705431492}
+        m_TargetAssemblyTypeName: KeyLock, Assembly-CSharp
+        m_MethodName: Disable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -173,7 +173,7 @@ AudioSource:
   m_GameObject: {fileID: 3269046525705431513}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5588109298527235132, guid: ef665d3419f3a40de93838236b8de584, type: 2}
   m_audioClip: {fileID: 8300000, guid: c57b4de8ae69f4ecc8a672776982b3a7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

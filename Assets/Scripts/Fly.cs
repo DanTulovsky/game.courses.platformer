@@ -33,6 +33,6 @@ public class Fly : MonoBehaviour
         Player player = col.GetComponent<Player>();
         if (!player) return;
 
-        _audioSource.Play();
+        if (_audioSource != null) _audioSource.Play();
     }
 }

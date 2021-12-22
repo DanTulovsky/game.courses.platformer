@@ -26,8 +26,8 @@ public class Breakable : MonoBehaviour
     private void TakeHit()
     {
         _particleSystem.Play();
-        _audioSource.Play();
-        
+        if (_audioSource != null) _audioSource.Play();
+
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
     }

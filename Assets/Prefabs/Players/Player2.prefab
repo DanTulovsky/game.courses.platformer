@@ -161,6 +161,7 @@ MonoBehaviour:
   maxJumps: 2
   downPull: 0.1
   maxJumpDuration: 0.3
+  deathSound: {fileID: 8300000, guid: 44c75bd669dda427496eca037c0e084e, type: 3}
   feet: {fileID: 7551191246864663131}
 --- !u!95 &7551191247295505867
 Animator:
@@ -207,7 +208,7 @@ AudioSource:
   m_GameObject: {fileID: 7551191247295505865}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4564008023223976196, guid: ef665d3419f3a40de93838236b8de584, type: 2}
   m_audioClip: {fileID: 8300000, guid: 49618f4f8b39f462596e44da6b592f76, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
