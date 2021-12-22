@@ -25,15 +25,20 @@ public class Fireball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
+        ITakeDamage damageable = col.collider.GetComponent<ITakeDamage>();
+
+        if (damageable != null)
+        {
+            damageable.TakeDamage();
+            Destroy(gameObject);
+            return;
+        }
+
         _bounces++;
         if (_bounces > maxBounces)
             Destroy(gameObject);
         else
             _rigidbody2D.velocity = new Vector2(launchForce * Direction, bounceForce);
-    }
-
-    private void Update()
-    {
     }
 
     private void OnBecameInvisible()

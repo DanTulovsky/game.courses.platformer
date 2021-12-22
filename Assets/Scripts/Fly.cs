@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Fly : MonoBehaviour
+public class Fly : MonoBehaviour, ITakeDamage
 {
     private Vector2 _startPosition;
     [SerializeField] private Vector2 direction = Vector2.up;
@@ -34,5 +35,15 @@ public class Fly : MonoBehaviour
         if (!player) return;
 
         if (_audioSource != null) _audioSource.Play();
+    }
+
+    public void TakeDamage()
+    {
+        Die();
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

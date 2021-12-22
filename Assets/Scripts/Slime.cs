@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Slime : MonoBehaviour
+public class Slime : MonoBehaviour, ITakeDamage
 {
     [SerializeField] private Transform leftSensor;
     [SerializeField] private Transform rightSensor;
@@ -57,7 +57,7 @@ public class Slime : MonoBehaviour
         // Coming from above
         if (normal.y <= -0.6)
         {
-            StartCoroutine(Die());
+            TakeDamage();
         }
         else
         {
@@ -86,5 +86,10 @@ public class Slime : MonoBehaviour
             alpha -= Time.deltaTime;
             _spriteRenderer.color = new Color(1, 1, 1, alpha);
         }
+    }
+
+    public void TakeDamage()
+    {
+        StartCoroutine(Die());
     }
 }
