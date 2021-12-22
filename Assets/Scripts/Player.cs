@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +9,7 @@ public class Player : MonoBehaviour
 
     [Header("Movement")] [SerializeField] private float speed = 1;
     [SerializeField] private float slipFactor = 1;
+    [SerializeField] private float wallSlideSpeed = 4;
 
     [Header("Jumping")] [SerializeField] private float jumpVelocity = 10;
     [SerializeField] private int maxJumps = 2;
@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [Header("Sounds")] [SerializeField] private AudioClip deathSound;
 
     [Header("Misc")] [SerializeField] private Transform feet;
+    [SerializeField] private Transform leftSensor;
+    [SerializeField] private Transform rightSensor;
 
     private AudioSource _audioSource;
 
@@ -58,7 +60,6 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _jumpsRemaining = maxJumps;
-
     }
 
     private void Update()
@@ -74,6 +75,12 @@ public class Player : MonoBehaviour
 
         UpdateAnimator();
         UpdateSpriteDirection();
+
+        if (ShouldSlide())
+        {
+            Slide();
+            return;
+        }
 
         if (ShouldStartJump()) Jump();
         else if (ShouldContinueJump()) ContinueJump();
@@ -91,6 +98,37 @@ public class Player : MonoBehaviour
             float downForce = downPull * _fallTimer * _fallTimer;
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y - downForce);
         }
+    }
+
+    private void Slide()
+    {
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, -wallSlideSpeed);
+    }
+
+    private bool ShouldSlide()
+    {
+        if (_isGrounded) return false;
+
+        if (_horizontal < 0 && MovingDown())
+        {
+            var hit = Physics2D.OverlapCircle(leftSensor.position, 0.1f);
+            if (hit != null && hit.CompareTag("Wall"))
+                return true;
+        }
+
+        if (_horizontal > 0 && MovingDown())
+        {
+            var hit = Physics2D.OverlapCircle(rightSensor.position, 0.1f);
+            if (hit != null && hit.CompareTag("Wall"))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool MovingDown()
+    {
+        return _rigidbody2D.velocity.y < 0;
     }
 
     private void ContinueJump()
@@ -152,6 +190,7 @@ public class Player : MonoBehaviour
         bool walking = _horizontal != 0;
         _animator.SetBool(WalkParam, walking);
         _animator.SetBool(JumpParam, ShouldContinueJump());
+        _animator.SetBool(JumpParam, ShouldSlide());
     }
 
     private void UpdateIsGrounded()
