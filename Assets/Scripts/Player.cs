@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,9 +16,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float downPull = 0.1f;
     [SerializeField] private float maxJumpDuration = 0.1f;
 
+    [Header("Sounds")] [SerializeField] private AudioClip deathSound;
+
     [Header("Misc")] [SerializeField] private Transform feet;
 
-    private AudioSource _jumpAudio;
+    private AudioSource _audioSource;
 
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
@@ -40,7 +44,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _jumpAudio = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -97,7 +101,7 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (_jumpAudio != null) _jumpAudio.Play();
+        if (_audioSource != null) _audioSource.Play();
 
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpVelocity);
         _jumpsRemaining--;
@@ -160,9 +164,18 @@ public class Player : MonoBehaviour
     public void Die()
     {
         ScoreSystem.ResetScore();
-        SceneManager.LoadScene("MainMenu");
+        _audioSource.PlayOneShot(deathSound);
+        _rigidbody2D.velocity = Vector2.zero;
+        _rigidbody2D.simulated = false;
+        StartCoroutine(LoadMainMenu());
+
         // _rigidbody2D.position = _startPosition;
-        // _rigidbody2D.velocity = Vector2.zero;
+    }
+
+    private IEnumerator LoadMainMenu()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void TeleportTo(Vector3 to)

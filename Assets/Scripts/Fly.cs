@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Fly : MonoBehaviour
@@ -7,11 +8,12 @@ public class Fly : MonoBehaviour
     [SerializeField] private float maxDistance = 2;
     [SerializeField] private float speed = 1;
 
-
+    private AudioSource _audioSource;
 
     private void Start()
     {
         _startPosition = transform.position;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -24,5 +26,13 @@ public class Fly : MonoBehaviour
             transform.position = _startPosition + (direction.normalized * maxDistance);
             direction *= -1;
         }
+    }
+
+    private void OnTriggerEnter2D( Collider2D col)
+    {
+        Player player = col.GetComponent<Player>();
+        if (!player) return;
+
+        _audioSource.Play();
     }
 }

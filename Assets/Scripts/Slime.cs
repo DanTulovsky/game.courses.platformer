@@ -9,6 +9,7 @@ public class Slime : MonoBehaviour
 
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
+    private AudioSource _audioSource;
 
     private float _direction = -1f;
 
@@ -16,6 +17,7 @@ public class Slime : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -67,6 +69,8 @@ public class Slime : MonoBehaviour
     {
         GetComponent<Animator>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
+
+        _audioSource.Play();
 
         _rigidbody2D.simulated = false;
         _spriteRenderer.sprite = deadSprite;
