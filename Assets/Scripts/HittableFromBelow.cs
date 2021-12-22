@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class HittableFromBelow : MonoBehaviour
+public abstract class HittableFromBelow : MonoBehaviour
 {
     [SerializeField] protected Sprite usedSprite;
 
-    private SpriteRenderer _spriteRenderer;
+    protected SpriteRenderer SpriteRenderer;
+    protected Collider2D Collider2D;
+
     private AudioSource _audioSource;
     protected virtual bool CanUse => true;
 
     private Animator _animator;
     private static readonly int UseTrigger = Animator.StringToHash("Use");
 
-    private void Awake()
+     protected void Awake()
     {
         _animator = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
+        Collider2D = GetComponent<Collider2D>();
     }
 
     protected virtual void Start()
@@ -35,8 +38,9 @@ public class HittableFromBelow : MonoBehaviour
         PlayAnimation();
         PlayAudio();
         Use();
+
         if (!CanUse)
-            _spriteRenderer.sprite = usedSprite;
+            SpriteRenderer.sprite = usedSprite;
     }
 
     private void PlayAudio()
@@ -50,7 +54,5 @@ public class HittableFromBelow : MonoBehaviour
             _animator.SetTrigger(UseTrigger);
     }
 
-    protected virtual void Use()
-    {
-    }
+    protected abstract void Use();
 }

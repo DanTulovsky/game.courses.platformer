@@ -16,8 +16,6 @@ public class CoinBox : HittableFromBelow
 
     protected override void Use()
     {
-        base.Use();
-
         if (_remainingCoins <= 0) return;
         
         _remainingCoins--;

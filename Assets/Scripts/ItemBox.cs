@@ -14,9 +14,7 @@ public class ItemBox : HittableFromBelow
         item = Instantiate(itemPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
         
         if (!item) return;
-        
-        base.Use();
-        
+
         _used = true;
         item.SetActive(true);
             
