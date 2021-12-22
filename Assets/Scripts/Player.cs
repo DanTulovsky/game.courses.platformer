@@ -78,7 +78,10 @@ public class Player : MonoBehaviour
 
         if (ShouldSlide())
         {
-            Slide();
+            if (ShouldStartJump())
+                WallJump();
+            else
+                Slide();
             return;
         }
 
@@ -100,6 +103,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void WallJump()
+    {
+        _rigidbody2D.velocity = new Vector2(- _horizontal * jumpVelocity, jumpVelocity*1.5f);
+    }
+
     private void Slide()
     {
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, -wallSlideSpeed);
@@ -108,15 +116,16 @@ public class Player : MonoBehaviour
     private bool ShouldSlide()
     {
         if (_isGrounded) return false;
+        if (!MovingDown()) return false;
 
-        if (_horizontal < 0 && MovingDown())
+        if (_horizontal <= 0)
         {
             var hit = Physics2D.OverlapCircle(leftSensor.position, 0.1f);
             if (hit != null && hit.CompareTag("Wall"))
                 return true;
         }
 
-        if (_horizontal > 0 && MovingDown())
+        if (_horizontal >= 0)
         {
             var hit = Physics2D.OverlapCircle(rightSensor.position, 0.1f);
             if (hit != null && hit.CompareTag("Wall"))
@@ -166,7 +175,8 @@ public class Player : MonoBehaviour
 
     private void MoveHorizontal()
     {
-        _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
+        var newHorizontal = Mathf.Lerp(_rigidbody2D.velocity.x, _horizontal, Time.deltaTime);
+        _rigidbody2D.velocity = new Vector2(newHorizontal, _rigidbody2D.velocity.y);
     }
 
     private void SlipHorizontal()
