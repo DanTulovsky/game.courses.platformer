@@ -11,7 +11,23 @@ public class Player : MonoBehaviour
     [SerializeField] private float slipFactor = 1;
     [SerializeField] private float wallSlideSpeed = 4;
 
-    [Header("Jumping")] [SerializeField] private float jumpVelocity = 10;
+    [Tooltip("Number of seconds (inverse: 1/value) to go from your current speed to target speed (on the ground)")]
+    [SerializeField]
+    private float acceleration = 4f;
+
+    [Tooltip("Number of seconds (inverse: 1/value) to go from your current speed to target speed (in the air)")]
+    [SerializeField]
+    private float breaking = 8f;
+
+    [Tooltip("Number of seconds (inverse: 1/value) to go from your current speed to target speed (in the air)")]
+    [SerializeField]
+    private float airBreaking = 0;
+
+    [Tooltip("Number of seconds (inverse: 1/value) to go from your current speed to target speed (in the air)")]
+    [SerializeField]
+    private float airAcceleration = 1;
+
+    [Header("Jumping")] [SerializeField] private float jumpVelocity = 4;
     [SerializeField] private int maxJumps = 2;
     [SerializeField] private float downPull = 0.1f;
     [SerializeField] private float maxJumpDuration = 0.1f;
@@ -105,7 +121,7 @@ public class Player : MonoBehaviour
 
     private void WallJump()
     {
-        _rigidbody2D.velocity = new Vector2(- _horizontal * jumpVelocity, jumpVelocity*1.5f);
+        _rigidbody2D.velocity = new Vector2(-_horizontal * jumpVelocity, jumpVelocity * 1.5f);
     }
 
     private void Slide()
@@ -175,7 +191,12 @@ public class Player : MonoBehaviour
 
     private void MoveHorizontal()
     {
-        var newHorizontal = Mathf.Lerp(_rigidbody2D.velocity.x, _horizontal, Time.deltaTime);
+        float smoothnessMultiplier = _horizontal == 0 ? breaking : acceleration;
+
+        if (!_isGrounded)
+            smoothnessMultiplier = _horizontal == 0 ? airBreaking : airAcceleration;
+
+        float newHorizontal = Mathf.Lerp(_rigidbody2D.velocity.x, _horizontal, Time.deltaTime * smoothnessMultiplier);
         _rigidbody2D.velocity = new Vector2(newHorizontal, _rigidbody2D.velocity.y);
     }
 
