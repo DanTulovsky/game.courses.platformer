@@ -6,8 +6,12 @@ using UnityEngine;
 public class Fireball : MonoBehaviour
 {
     [SerializeField] private float launchForce = 5;
+    [SerializeField] private int maxBounces = 3;
+    [SerializeField] private float bounceForce = 4f;
 
     private Rigidbody2D _rigidbody2D;
+    private int _bounces;
+    public float Direction { get; set; }
 
     private void Awake()
     {
@@ -16,14 +20,20 @@ public class Fireball : MonoBehaviour
 
     private void Start()
     {
-        Vector2 direction = Vector2.right * launchForce;
-        _rigidbody2D.velocity = direction;
+        _rigidbody2D.velocity = new Vector2(launchForce * Direction, 0);
+    }
 
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        _bounces++;
+        if (_bounces > maxBounces)
+            Destroy(gameObject);
+        else
+            _rigidbody2D.velocity = new Vector2(launchForce * Direction, bounceForce);
     }
 
     private void Update()
     {
-        
     }
 
     private void OnBecameInvisible()
