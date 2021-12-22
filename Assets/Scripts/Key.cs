@@ -1,10 +1,18 @@
+using System;
 using UnityEngine;
 
 public class Key : MonoBehaviour
 {
 
     [SerializeField] private KeyLock keyLock;
-    
+
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         
@@ -13,6 +21,7 @@ public class Key : MonoBehaviour
         {
             transform.SetParent(player.transform);
             transform.localPosition = Vector3.up;
+            if (_audioSource != null) _audioSource.Play();
         }
         
         KeyLock keyLock = col.GetComponent<KeyLock>();

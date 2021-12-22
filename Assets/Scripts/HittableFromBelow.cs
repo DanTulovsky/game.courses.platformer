@@ -5,6 +5,7 @@ public class HittableFromBelow : MonoBehaviour
     [SerializeField] protected Sprite usedSprite;
 
     private SpriteRenderer _spriteRenderer;
+    private AudioSource _audioSource;
     protected virtual bool CanUse => true;
 
     private Animator _animator;
@@ -14,6 +15,7 @@ public class HittableFromBelow : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     protected virtual void Start()
@@ -31,9 +33,15 @@ public class HittableFromBelow : MonoBehaviour
         if (!(col.GetContact(0).normal.y > 0)) return;
 
         PlayAnimation();
+        PlayAudio();
         Use();
         if (!CanUse)
             _spriteRenderer.sprite = usedSprite;
+    }
+
+    private void PlayAudio()
+    {
+        if (_audioSource != null) _audioSource.Play();
     }
 
     private void PlayAnimation()

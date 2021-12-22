@@ -9,4 +9,10 @@ public class KeyLock : MonoBehaviour
     {
         onUnlocked.Invoke();
     }
+
+    public void Disable()
+    {
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+    }
 }
