@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class ScoreSystem
 {
-    private static int Score { get; set; }
+    public static int Score { get; private set; }
     private static int HighScore { get; set; }
 
     public static event Action<int> OnScoreChanged;

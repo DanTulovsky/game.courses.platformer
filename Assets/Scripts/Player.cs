@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _jumpsRemaining = maxJumps;
+
     }
 
     private void Update()
